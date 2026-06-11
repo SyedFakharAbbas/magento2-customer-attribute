@@ -1,0 +1,6 @@
+# Copyright © EliteRemoteFirm. All rights reserved.
+
+type Customer {
+    uuid: String @resolver(class: "EliteRemoteFirm\\CustomerAttribute\\Model\\Resolver\\CustomerUuid")
+        @doc(description: "The unique, system-assigned identifier for the customer.")
+}

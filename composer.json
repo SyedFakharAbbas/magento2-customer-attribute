@@ -1,0 +1,23 @@
+{
+    "name": "elite-remote-firm/magento2-customer-attribute",
+    "description": "Adds a unique, read-only UUID attribute to Magento 2 customers with GraphQL and admin grid support.",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "version": "1.0.0",
+    "require": {
+        "php": "~8.3.0||~8.4.0||~8.5.0",
+        "magento/framework": "103.0.*",
+        "magento/module-customer": "103.0.*",
+        "magento/module-customer-graph-ql": "100.4.*",
+        "magento/module-eav": "102.1.*",
+        "ramsey/uuid": "^4.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "EliteRemoteFirm\\CustomerAttribute\\": ""
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © EliteRemoteFirm. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="EliteRemoteFirm_CustomerAttribute">
+        <sequence>
+            <module name="Magento_Customer"/>
+            <module name="Magento_CustomerGraphQl"/>
+            <module name="Magento_Eav"/>
+        </sequence>
+    </module>
+</config>
