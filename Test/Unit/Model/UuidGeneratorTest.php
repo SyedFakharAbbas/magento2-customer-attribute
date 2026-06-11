@@ -15,14 +15,24 @@ use PHPUnit\Framework\TestCase;
 
 class UuidGeneratorTest extends TestCase
 {
-    /** @var ResourceConnection&MockObject */
+    /**
+     * @var ResourceConnection&MockObject
+     */
     private ResourceConnection $resourceConnection;
 
-    /** @var AdapterInterface&MockObject */
+    /**
+     * @var AdapterInterface&MockObject
+     */
     private AdapterInterface $connection;
 
+    /**
+     * @var UuidGenerator
+     */
     private UuidGenerator $uuidGenerator;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->resourceConnection = $this->createMock(ResourceConnection::class);
@@ -35,6 +45,9 @@ class UuidGeneratorTest extends TestCase
         $this->uuidGenerator = new UuidGenerator($this->resourceConnection);
     }
 
+    /**
+     * @return void
+     */
     public function testGenerateUniqueReturnsValidUuid(): void
     {
         $select = $this->createMock(Select::class);
@@ -53,6 +66,9 @@ class UuidGeneratorTest extends TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGenerateUniqueRetriesWhenCollisionOccurs(): void
     {
         $select = $this->createMock(Select::class);

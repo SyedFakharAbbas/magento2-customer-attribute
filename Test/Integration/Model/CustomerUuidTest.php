@@ -8,7 +8,6 @@ namespace EliteRemoteFirm\CustomerAttribute\Test\Integration\Model;
 
 use EliteRemoteFirm\CustomerAttribute\Setup\Patch\Data\AddUuidCustomerAttribute;
 use Magento\Customer\Api\CustomerRepositoryInterface;
-use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Customer\Api\Data\CustomerInterfaceFactory;
 use Magento\Eav\Model\Config;
 use Magento\Framework\Api\AttributeValueFactory;
@@ -18,16 +17,36 @@ use Magento\TestFramework\Helper\Bootstrap;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Integration tests for customer UUID attribute behaviour.
+ *
  * @magentoAppArea frontend
  * @magentoDbIsolation enabled
  */
 class CustomerUuidTest extends TestCase
 {
+    /**
+     * @var CustomerRepositoryInterface
+     */
     private CustomerRepositoryInterface $customerRepository;
+
+    /**
+     * @var CustomerInterfaceFactory
+     */
     private CustomerInterfaceFactory $customerFactory;
+
+    /**
+     * @var AttributeValueFactory
+     */
     private AttributeValueFactory $attributeValueFactory;
+
+    /**
+     * @var Config
+     */
     private Config $eavConfig;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         $objectManager = Bootstrap::getObjectManager();
@@ -37,6 +56,9 @@ class CustomerUuidTest extends TestCase
         $this->eavConfig = $objectManager->get(Config::class);
     }
 
+    /**
+     * @return void
+     */
     public function testUuidAttributeExistsAndIsUnique(): void
     {
         $attribute = $this->eavConfig->getAttribute('customer', AddUuidCustomerAttribute::ATTRIBUTE_CODE);
@@ -48,8 +70,11 @@ class CustomerUuidTest extends TestCase
     }
 
     /**
+     * Verify new customers receive a UUID automatically on save.
+     *
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @return void
      */
     public function testNewCustomerReceivesUuidAutomatically(): void
     {
@@ -76,8 +101,11 @@ class CustomerUuidTest extends TestCase
     }
 
     /**
+     * Verify an existing UUID cannot be modified via customer repository save.
+     *
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @return void
      */
     public function testExistingUuidCannotBeModified(): void
     {

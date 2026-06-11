@@ -15,6 +15,8 @@ use Magento\Customer\Model\Customer\DataProviderWithDefaultAddresses;
 class UuidReadOnlyPlugin
 {
     /**
+     * Disable UUID field editing in admin customer form metadata.
+     *
      * @param DataProviderWithDefaultAddresses $subject
      * @param array $meta
      * @return array

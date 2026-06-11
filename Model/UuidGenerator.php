@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace EliteRemoteFirm\CustomerAttribute\Model;
 
 use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Ramsey\Uuid\Uuid;
 
@@ -18,6 +19,9 @@ class UuidGenerator
     private const ATTRIBUTE_CODE = 'uuid';
     private const MAX_ATTEMPTS = 5;
 
+    /**
+     * @param ResourceConnection $resourceConnection
+     */
     public function __construct(
         private readonly ResourceConnection $resourceConnection
     ) {
@@ -27,6 +31,7 @@ class UuidGenerator
      * Generate a UUID that does not already exist on a customer record.
      *
      * @throws LocalizedException
+     * @return string
      */
     public function generateUnique(): string
     {
@@ -44,12 +49,19 @@ class UuidGenerator
     }
 
     /**
-     * @param \Magento\Framework\DB\Adapter\AdapterInterface $connection
+     * Check whether a UUID already exists in customer attribute storage.
+     *
+     * @param AdapterInterface $connection
+     * @param string $uuid
+     * @return bool
      */
-    private function uuidExists($connection, string $uuid): bool
+    private function uuidExists(AdapterInterface $connection, string $uuid): bool
     {
         $select = $connection->select()
-            ->from(['cev' => $this->resourceConnection->getTableName('customer_entity_varchar')], 'value_id')
+            ->from(
+                ['cev' => $this->resourceConnection->getTableName('customer_entity_varchar')],
+                'value_id'
+            )
             ->join(
                 ['ea' => $this->resourceConnection->getTableName('eav_attribute')],
                 'cev.attribute_id = ea.attribute_id',

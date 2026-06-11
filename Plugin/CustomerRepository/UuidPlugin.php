@@ -19,6 +19,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
  */
 class UuidPlugin
 {
+    /**
+     * @param UuidGenerator $uuidGenerator
+     */
     public function __construct(
         private readonly UuidGenerator $uuidGenerator
     ) {
@@ -59,7 +62,11 @@ class UuidPlugin
     }
 
     /**
+     * Assign a UUID when the customer does not already have one.
+     *
+     * @param CustomerInterface $customer
      * @throws LocalizedException
+     * @return void
      */
     private function assignUuidIfMissing(CustomerInterface $customer): void
     {
@@ -75,6 +82,12 @@ class UuidPlugin
         );
     }
 
+    /**
+     * Get the current UUID value from a customer object.
+     *
+     * @param CustomerInterface $customer
+     * @return string|null
+     */
     private function getUuidValue(CustomerInterface $customer): ?string
     {
         $attribute = $customer->getCustomAttribute(AddUuidCustomerAttribute::ATTRIBUTE_CODE);

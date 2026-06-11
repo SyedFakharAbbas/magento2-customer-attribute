@@ -17,14 +17,24 @@ use PHPUnit\Framework\TestCase;
 
 class UuidPluginTest extends TestCase
 {
-    /** @var UuidGenerator&MockObject */
+    /**
+     * @var UuidGenerator&MockObject
+     */
     private UuidGenerator $uuidGenerator;
 
-    /** @var CustomerRepositoryInterface&MockObject */
+    /**
+     * @var CustomerRepositoryInterface&MockObject
+     */
     private CustomerRepositoryInterface $customerRepository;
 
+    /**
+     * @var UuidPlugin
+     */
     private UuidPlugin $plugin;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         $this->uuidGenerator = $this->createMock(UuidGenerator::class);
@@ -32,11 +42,16 @@ class UuidPluginTest extends TestCase
         $this->plugin = new UuidPlugin($this->uuidGenerator);
     }
 
+    /**
+     * @return void
+     */
     public function testBeforeSaveAssignsUuidForNewCustomer(): void
     {
         $customer = $this->createMock(CustomerInterface::class);
         $customer->method('getId')->willReturn(null);
-        $customer->method('getCustomAttribute')->with(AddUuidCustomerAttribute::ATTRIBUTE_CODE)->willReturn(null);
+        $customer->method('getCustomAttribute')
+            ->with(AddUuidCustomerAttribute::ATTRIBUTE_CODE)
+            ->willReturn(null);
 
         $this->uuidGenerator->expects($this->once())
             ->method('generateUnique')
@@ -51,6 +66,9 @@ class UuidPluginTest extends TestCase
         $this->assertSame($customer, $result[0]);
     }
 
+    /**
+     * @return void
+     */
     public function testBeforeSavePreservesExistingUuid(): void
     {
         $customer = $this->createMock(CustomerInterface::class);
